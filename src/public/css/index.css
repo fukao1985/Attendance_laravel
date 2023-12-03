@@ -1,0 +1,83 @@
+.header {
+    width: 100%;
+    height: 78px;
+}
+
+.header__inner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__logo {
+    font-size: 30px;
+    margin-left: 52px;
+}
+
+.header__nav-list {
+    display: flex;
+}
+
+.list-item {
+    text-decoration: none;
+    font-weight: bolder;
+    color: #000;
+    padding-right: 50px;
+}
+
+.content__form {
+    width: 100%;
+    height: 100%;
+}
+
+.form-title {
+    display: flex;
+}
+
+.form-title-log {
+    margin: 60px auto 32px auto;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.form {
+    display: flex;
+}
+
+.form-box {
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+.form-item {
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.btn-label {
+    display: inline-block;
+    width: 425px;
+    height: 170px;
+    color: #000;
+    background-color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 21px;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked+label {
+    color: #f2f2f2;
+}
