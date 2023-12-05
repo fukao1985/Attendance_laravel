@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Work extends Model
 {
     use HasFactory;
+    
+    // 操作可能にするものを指定
+    protected $fillable = [
+        'user_id',
+        'date',
+        'work_start',
+        'work_end',
+    ]
 
     // Userモデルとのリレーション
     public function user(){

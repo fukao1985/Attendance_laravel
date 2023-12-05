@@ -20,7 +20,11 @@ use App\Http\Controllers\RestController;
 
 Route::get('/', [WorkController::class, 'index']);
 
+// ユーザー新規登録ページ表示
 Route::get('/register', [RegisteredUserController::class, 'create']);
+
+// ユーザー新規登録処理
+Route::post('register', [RegisteredUserController::class, 'store']);
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create']);
 

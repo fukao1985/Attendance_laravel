@@ -19,19 +19,40 @@
                 <h3 class="form-title-log">会員登録</h3>
             </div>
             <div class="form">
-                <form class="form-box">
+                <form class="form-box" action="/register" method="post">
+                @csrf
                     <div class="form-item">
-                        <input type="name" id="inputName" class="form-control" placeholder="名前" required autofocus>
+                        <input type="name" name="name" id="inputName" class="form-control" placeholder="名前" required autofocus value="{{ old('name') }}">
+                        <div class="form__error">
+                        @error('name')
+                        {{ $message }}
+                        @enderror
+                        </div>
                     </div>
                     <div class="form-item">
-                        <input type="email" id="inputEmail" class="form-control" placeholder="メールアドレス" required
-                            autofocus>
+                        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="メールアドレス" required
+                            autofocus value="{{ old('email') }}">
+                        <div class="form__error">
+                        @error('email')
+                        {{ $message }}
+                        @enderror
+                        </div>
                     </div>
                     <div class="form-item">
-                        <input type="password" id="inputPassword" class="form-control" placeholder="パスワード" required>
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="パスワード" required value="{{ old('password') }}">
+                        <div class="form__error">
+                        @error('password')
+                        {{ $message }}
+                        @enderror
+                        </div>
                     </div>
                     <div class="form-item">
-                        <input type="password" id="inputPasswordConfirmation" class="form-control" placeholder="確認用パスワード" required>
+                        <input type="password" name="password_confirmation" id="inputPasswordConfirmation" class="form-control" placeholder="確認用パスワード" required value="{{ old('password') }}">
+                        <div class="form__error">
+                        @error('password')
+                        {{ $message }}
+                        @enderror
+                        </div>
                     </div>
                     <div class="form-item">
                         <button class="form-item-btn" type="submit">会員登録</button>

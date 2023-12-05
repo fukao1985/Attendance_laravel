@@ -23,7 +23,7 @@
 <!-- <div class="main__content"> -->
         <div class="content__form">
             <div class="form-title">
-                <h3 class="form-title-log">⚪︎⚪︎さんお疲れ様です！</h3>
+                <h3 class="form-title-log">{{ Auth::user()->name }}さんお疲れ様です！</h3>
             </div>
             <div class="form">
                 <form class="form-box">

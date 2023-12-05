@@ -40,7 +40,7 @@
                         </tr>
                         <form action=" ">
                             <tr class="table-data">
-                                <td class="table-name">名前</td>
+                                <td class="table-name">{{ Auth::user()->name }}</td>
                                 <td class="table-work-start">勤務開始</td>
                                 <td class="table-sork-end">勤務終了</td>
                                 <td class="table-rest">休憩時間</td>
