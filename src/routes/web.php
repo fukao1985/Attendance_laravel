@@ -18,17 +18,23 @@ use App\Http\Controllers\RestController;
 */
 
 
-Route::get('/', [WorkController::class, 'index']);
+// 打刻ページの表示
+Route::middleware('auth')->group(function () {
+    Route::get('/', [WorkController::class, 'index']);
+});
 
 // ユーザー新規登録ページ表示
-Route::get('/register', [RegisteredUserController::class, 'create']);
+// Route::get('/register', [RegisteredUserController::class, 'create']);
 
 // ユーザー新規登録処理
-Route::post('register', [RegisteredUserController::class, 'store']);
+// Route::post('register', [RegisteredUserController::class, 'store']);
 
-Route::get('/login', [AuthenticatedSessionController::class, 'create']);
+// Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 
-Route::get('/attendance', [RestController::class, 'dateAttendance']);
+// 日付別勤怠ページの表示
+Route::middleware('auth')->group(function () {
+    Route::get('/attendance', [RestController::class, 'dateAttendance']);
+});
 
 // Route::get('/', function () {
 //     return view('welcome');

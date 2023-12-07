@@ -26,6 +26,15 @@
     padding-right: 50px;
 }
 
+.list-button {
+    border: none;
+    font-weight: bolder;
+    color: #000;
+    padding-right: 50px;
+    background-color: #fff;
+    font-size: 16px;
+}
+
 .content__form {
     width: 100%;
     height: 100%;
