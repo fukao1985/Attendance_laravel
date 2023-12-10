@@ -15,7 +15,7 @@ class Work extends Model
         'date',
         'work_start',
         'work_end',
-    ]
+    ];
 
     // Userモデルとのリレーション
     public function user(){

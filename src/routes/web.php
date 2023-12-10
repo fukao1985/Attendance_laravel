@@ -23,6 +23,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [WorkController::class, 'index']);
 });
 
+// 勤務開始の処理
+Route::post('/work/start', [WorkController::class, 'startWork'])->name('work.start');
+
+// 勤務終了の処理
+Route::post('/work/end', [WorkController::class, 'endWork'])->name('work.end');
+
+
+// 休憩開始の処理
+Route::post('/rest/start', [RestController::class, 'startRest'])->name('rest.start');
+
+// 休憩終了の処理
+Route::post('/rest/end', [RestController::class, 'endRest'])->name('rest.end');
+
 // ユーザー新規登録ページ表示
 // Route::get('/register', [RegisteredUserController::class, 'create']);
 

@@ -15,7 +15,7 @@ class Rest extends Model
         'date',
         'rest_start',
         'rest_end',
-    ]
+    ];
 
     // Workモデルとのリレーション
     public function work(){

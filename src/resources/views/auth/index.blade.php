@@ -12,7 +12,7 @@
                 <ul class="header__nav-list">
                     @if (Auth::check())
                     <li><a class="list-item" href="/">ホーム</a></li>
-                    <li><a class="list-item" href="/">日付一覧</a></li>
+                    <li><a class="list-item" href="/attendance">日付一覧</a></li>
                     <li>
                         <form class="logout-form" action="/logout" method="post">
                         @csrf
@@ -30,27 +30,42 @@
 <!-- <div class="main__content"> -->
         <div class="content__form">
             <div class="form-title">
+                @if(session('message'))
+                <div class="alert alert-success">{{session('message')}}</div>
+                @endif
                 <h3 class="form-title-log">{{ Auth::user()->name }}さんお疲れ様です！</h3>
             </div>
             <div class="form">
-                <form class="form-box">
+                <div class="form-box">
                     <div class="form-item">
-                        <input type="radio" name="work" id="work-btn-start" value="start" />
-                        <label class="btn-label" for="work-btn-start">勤務開始</label>
+                        <form action="{{ route('work.start') }}" method="post">
+                        @csrf
+                            <input type="radio" name="work" id="work-btn-start" value="{{ \Carbon\Carbon::now() }}" />
+                            <input type="submit" name="submit" class="btn-label" value="勤務開始"/>
+                        </form>
                     </div>
                     <div class="form-item">
-                        <input type="radio" name="work" id="work-btn-end" value="end" />
-                        <label class="btn-label" for="work-btn-end">勤務終了</label>
+                        <form action="{{ route('work.end') }}" method="post">
+                        @csrf
+                            <input type="radio" name="work" id="work-btn-end" value="{{ \Carbon\Carbon::now() }}" />
+                            <input type="submit" name="submit" class="btn-label" value="勤務終了"/>
+                        </form>
                     </div>
                     <div class="form-item">
-                        <input type="radio" name="rest" id="rest-btn-start" value="start" />
-                        <label class="btn-label" for="rest-btn-start">休憩開始</label>
+                        <form action="{{ route('rest.start') }}" method="post">
+                        @csrf
+                            <input type="radio" name="rest" id="rest-btn-start" value="{{ \Carbon\Carbon::now() }}" />
+                            <input type="submit" name="submit" class="btn-label" value="休憩開始"/>
+                        </form>
                     </div>
                     <div class="form-item">
-                        <input type="radio" name="rest" id="rest-btn-end" value="end" />
-                        <label class="btn-label" for="rest-btn-end">休憩終了</label>
+                        <form action="{{ route('rest.end') }}" method="post">
+                        @csrf
+                            <input type="radio" name="rest" id="rest-btn-end" value="{{ \Carbon\Carbon::now() }}" />
+                            <input type="submit" name="submit" class="btn-label" value="休憩終了"/>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
         <!-- </div> -->

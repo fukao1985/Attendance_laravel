@@ -11,7 +11,7 @@
             <nav class="header__nav">
                 <ul class="header__nav-list">
                     <li><a class="list-item" href="/">ホーム</a></li>
-                    <li><a class="list-item" href="/">日付一覧</a></li>
+                    <li><a class="list-item" href="/attendance">日付一覧</a></li>
                     <li>
                         <form class="logout-form" action="/logout" method="post">
                         @csrf
@@ -29,7 +29,7 @@
         <div class="content__form">
         <!-- 日付のところ -->
             <div class="form-title">
-                <h3 class="form-title-log">2021-11-07</h3>
+                <h3 class="form-title-log">{{ \Carbon\Carbon::now()->format("Y-m-d") }}</h3>
             </div>
 
         <!-- データを表示する表(table) -->
@@ -45,9 +45,9 @@
                         </tr>
                         <form action=" ">
                             <tr class="table-data">
-                                <td class="table-name">{{ Auth::user()->name }}</td>
-                                <td class="table-work-start">勤務開始</td>
-                                <td class="table-sork-end">勤務終了</td>
+                                <td class="table-name">{{ $rest->$work->$user->name }}</td>
+                                <td class="table-work-start">{{ $rest->$work->work_start }}</td>
+                                <td class="table-sork-end">{{ $rest->$work->work_end }}</td>
                                 <td class="table-rest">休憩時間</td>
                                 <td class="table-work">勤務時間</td>
                             </tr>
