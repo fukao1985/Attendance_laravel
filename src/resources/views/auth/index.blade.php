@@ -30,25 +30,41 @@
 <!-- <div class="main__content"> -->
         <div class="content__form">
             <div class="form-title">
-                @if(session('message'))
-                <div class="alert alert-success">{{session('message')}}</div>
-                @endif
-                <h3 class="form-title-log">{{ Auth::user()->name }}さんお疲れ様です！</h3>
+                <h3 class="form-title-log">
+                    @if(session('message'))
+                    <div class="alert alert-success">{{session('message')}}</div>
+                    @endif
+                {{ Auth::user()->name }}さんお疲れ様です！
+                </h3>
             </div>
             <div class="form">
                 <div class="form-box">
                     <div class="form-item">
                         <form action="{{ route('work.start') }}" method="post">
                         @csrf
-                            <input type="radio" name="work" id="work-btn-start" value="{{ \Carbon\Carbon::now() }}" />
-                            <input type="submit" name="submit" class="btn-label" value="勤務開始"/>
+                            
+                            {{-- <div class="work-btn-start"> --}}
+                            <button type="submit" name="submit">
+                                <input type="radio" name="work" id="work-btn-start" value="{{ \Carbon\Carbon::now() }}" />
+                                <label for="work-btn-start" class="btn-label">
+                                    勤務開始
+                                </label>
+                            </button>
+                            {{-- </div> --}}
                         </form>
                     </div>
                     <div class="form-item">
                         <form action="{{ route('work.end') }}" method="post">
                         @csrf
-                            <input type="radio" name="work" id="work-btn-end" value="{{ \Carbon\Carbon::now() }}" />
-                            <input type="submit" name="submit" class="btn-label" value="勤務終了"/>
+                            <button type="submit" name="submit">
+                                <input type="radio" name="work" id="work-btn-end" value="{{ \Carbon\Carbon::now() }}" />
+                                <label for="work-btn-end" class="btn-label">
+                                    勤務終了
+                                </label>
+                            </button>
+                            {{-- <button type="submit" name="submit" class="btn-label">
+                                <input type="radio" name="work" id="work-btn-end" value="{{ \Carbon\Carbon::now() }}" />勤務終了
+                            </button> --}}
                         </form>
                     </div>
                     <div class="form-item">
@@ -68,5 +84,17 @@
                 </div>
             </div>
         </div>
+        {{-- <script src="{{ asset('js/app.js') }}"></script>
+        <script>
+            function clickWorkStart() {
+                if (document.getElementById("work-btn-start").disabled === true) {
+                document.getElementById("work-btn-start").removeAttribute("disabled");
+                document.getElementById("work-btn-start").style.color = "#000";
+                }else{
+                document.getElementById("work-btn-start").setAttribute("disabled", true);
+                document.getElementById("work-btn-start").style.color = "#f2f2f2";
+                }
+            }
+        </script> --}}
         <!-- </div> -->
 @endsection

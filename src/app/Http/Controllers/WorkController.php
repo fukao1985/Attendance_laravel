@@ -28,15 +28,38 @@ class WorkController extends Controller
             'work_end' => '',
         ]);
 
-        return back()->withInput()->with('message', '勤務を開始しました');
+        return back()->withInput($request->all())->with('message', '勤務を開始しました');
+
+        // return back()->withInput($request->'radio')->with('message', '勤務を開始しました');
 
     }
 
     // 勤務終了の処理
-    public function endWork(Request $request) {
+    public function endWork(Request $request, Work $work) {
         // 現在ログインしているユーザーを取得
-        $user = Auth::user();
-        // ログインしているユーザーが本日出勤した記録があるかの確認
+        // dd($work);
+
+        // $user = Auth::user();
+        // $id = Auth::id();
+        $today = Carbon::today()->format('Y-m-d');
+        
+        // // ログインしているユーザーが本日出勤した記録があるかの確認
+        // ログインユーザーの最新レコードを取得
+        $oldTimeIn = Work::where('user_id', auth()->id())->whereDate('date', $today)->latest()->first();
+        // $oldTimeIn = $work->latest()->first();
+        // 勤務終了を記録する
+        // $id = Auth::id();
+        $workOutTime = Carbon::now();
+        $attendance = new Work;
+        $work_end = $oldTimeIn->update([
+            'user_id' => $oldTimeIn->user_id,
+            'date' => $oldTimeIn->date,
+            'work_start' => $oldTimeIn->work_start,
+            'work_end' => $workOutTime->format('H:i:s'),
+        ]);
+
+        return back()->withInput($request->all())->with('message', '勤務を終了しました');
+        // return back()->withInput()->with('message', '勤務を終了しました');
     }
 
 }

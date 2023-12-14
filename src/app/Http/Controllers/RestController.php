@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Rest;
+use App\Models\Work;
 use Carbon\Carbon;
 
 class RestController extends Controller
@@ -16,7 +17,19 @@ class RestController extends Controller
 
 
     // 休憩開始をクリック
-    public function startRest() {
+    public function startRest(Request $request) {
+        $today = Carbon::today();
+        $work_id = Work::where('user_id', auth()->id())->whereDate('id', $today)->get();
+        $restInTime = Carbon::now();
+        $attendance = new Rest;
+        $rest_start = Rest::create([
+            'work_id' => $work_id,
+            'date' => $restInTime->format('Y-m-d'),
+            'rest_start' => $restInTime->format('H:i:s'),
+            'rest_end' => '',
+        ]);
+
+        return back()->withInput($request->all())->with('message', '休憩を開始しました');
 
     }
     // その日出勤していたら→日付と休憩開始の時間を保存
