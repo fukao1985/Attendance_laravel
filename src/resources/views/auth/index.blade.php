@@ -39,62 +39,84 @@
             </div>
             <div class="form">
                 <div class="form-box">
+                    {{-- 勤務開始 --}}
                     <div class="form-item">
-                        <form action="{{ route('work.start') }}" method="post">
-                        @csrf
-                            
-                            {{-- <div class="work-btn-start"> --}}
-                            <button type="submit" name="submit">
-                                <input type="radio" name="work" id="work-btn-start" value="{{ \Carbon\Carbon::now() }}" />
-                                <label for="work-btn-start" class="btn-label">
-                                    勤務開始
-                                </label>
-                            </button>
-                            {{-- </div> --}}
-                        </form>
+                        @if ('work.start')
+                            <form action="{{ route('work.start') }}" method="post">
+                            @csrf
+                                <input desabled type="submit" name="submit" class="btn-label" value="勤務開始" style="color:#f2f2f2" />
+                            </form>
+                        @elseif ('work.start' && 'work.end')
+                            <form action="{{ route('work.start') }}" method="post">
+                            @csrf
+                                <input desabled type="submit" name="submit" class="btn-label" value="勤務開始" style="color:#f2f2f2"/>
+                            </form>
+                        @else
+                            <form action="{{ route('work.start') }}" method="post">
+                            @csrf
+                                <input type="submit" name="submit" class="btn-label" value="勤務開始" />
+                            </form>
+                        @endif
                     </div>
+
+                    {{-- 勤務終了 --}}
                     <div class="form-item">
-                        <form action="{{ route('work.end') }}" method="post">
-                        @csrf
-                            <button type="submit" name="submit">
-                                <input type="radio" name="work" id="work-btn-end" value="{{ \Carbon\Carbon::now() }}" />
-                                <label for="work-btn-end" class="btn-label">
-                                    勤務終了
-                                </label>
-                            </button>
-                            {{-- <button type="submit" name="submit" class="btn-label">
-                                <input type="radio" name="work" id="work-btn-end" value="{{ \Carbon\Carbon::now() }}" />勤務終了
-                            </button> --}}
-                        </form>
+                        @if ('work.start')
+                            <form action="{{ route('work.end') }}" method="post">
+                            @csrf
+                                <input type="submit" name="submit" class="btn-label" value="勤務終了" />
+                            </form>
+                        @elseif ('work.start' && 'work.end')
+                            <form action="{{ route('work.end') }}" method="post">
+                            @csrf
+                                <input desabled type="submit" name="submit" class="btn-label" value="勤務終了" style="color:#f2f2f2"/>
+                            </form>
+                        @else
+                            <form action="{{ route('work.end') }}" method="post">
+                            @csrf
+                                <input desabled type="submit" name="submit" class="btn-label" value="勤務終了" style="color:#f2f2f2"/>
+                            </form>
+                        @endif
                     </div>
+
+                    {{-- 休憩開始 --}}
                     <div class="form-item">
-                        <form action="{{ route('rest.start') }}" method="post">
-                        @csrf
-                            <input type="radio" name="rest" id="rest-btn-start" value="{{ \Carbon\Carbon::now() }}" />
-                            <input type="submit" name="submit" class="btn-label" value="休憩開始"/>
-                        </form>
+                        @if ('work.start' && 'rest.start')
+                            <input desabled type="submit" name="submit" class="btn-label" value="休憩開始" style="color:#f2f2f2"/>
+                        @elseif ('work.start')
+                            <form action="{{ route('rest.start') }}" method="post">
+                            @csrf
+                                <input type="submit" name="submit" class="btn-label" value="休憩開始"/>
+                            </form>
+                        @elseif ('work.start' && 'rest.end')
+                            <form action="{{ route('rest.start') }}" method="post">
+                            @csrf
+                                <input type="submit" name="submit" class="btn-label" value="休憩開始"/>
+                            </form>
+                        @else
+                            <form action="{{ route('rest.start') }}" method="post">
+                            @csrf
+                                <input desabled type="submit" name="submit" class="btn-label" value="休憩開始" style="color:#f2f2f2"/>
+                            </form>
+                        @endif
                     </div>
+
+                    {{-- 休憩終了 --}}
                     <div class="form-item">
-                        <form action="{{ route('rest.end') }}" method="post">
-                        @csrf
-                            <input type="radio" name="rest" id="rest-btn-end" value="{{ \Carbon\Carbon::now() }}" />
-                            <input type="submit" name="submit" class="btn-label" value="休憩終了"/>
-                        </form>
+                        @if ('work.start' && 'rest.start')
+                            <form action="{{ route('rest.end') }}" method="post">
+                            @csrf
+                                <input type="submit" name="submit" class="btn-label" value="休憩終了"/>
+                            </form>
+                        @else
+                            <form action="{{ route('rest.end') }}" method="post">
+                            @csrf
+                                <input desabled type="submit" name="submit" class="btn-label" value="休憩終了" style="color:#f2f2f2" />
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-        {{-- <script src="{{ asset('js/app.js') }}"></script>
-        <script>
-            function clickWorkStart() {
-                if (document.getElementById("work-btn-start").disabled === true) {
-                document.getElementById("work-btn-start").removeAttribute("disabled");
-                document.getElementById("work-btn-start").style.color = "#000";
-                }else{
-                document.getElementById("work-btn-start").setAttribute("disabled", true);
-                document.getElementById("work-btn-start").style.color = "#f2f2f2";
-                }
-            }
-        </script> --}}
         <!-- </div> -->
 @endsection

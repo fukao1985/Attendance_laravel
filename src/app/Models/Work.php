@@ -27,4 +27,8 @@ class Work extends Model
         return $this->hasMany('App\Models\Rest');
     }
 
+    // 日付別でデータを表示する際のデータを取得するメソッド
+    public function getDataByDate($date) {
+        return $this->whereDate('date', $date)->get();
+    }
 }

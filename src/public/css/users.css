@@ -1,0 +1,103 @@
+.header {
+    width: 100%;
+    height: 78px;
+}
+
+.header__inner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__logo {
+    font-size: 30px;
+    margin-left: 52px;
+}
+
+.header__nav-list {
+    display: flex;
+}
+
+.list-item {
+    text-decoration: none;
+    font-weight: bolder;
+    color: #000;
+    padding-right: 50px;
+}
+
+.list-button {
+    border: none;
+    font-weight: bolder;
+    color: #000;
+    padding-right: 50px;
+    background-color: #fff;
+    font-size: 16px;
+}
+
+.content__form {
+    width: 100%;
+    height: 100%;
+}
+
+.form-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-title-log {
+    margin: 40px 25px 32px 25px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.form-button {
+    color: #0000ff;
+    background-color: #fff;
+    padding: 3px 15px;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+    border: 1px solid #0000ff;
+}
+
+.form {
+    /* display: flex; */
+    width: 90%;
+    margin: 0 auto;
+}
+
+table {
+    width: 100%;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 10px 30px;
+    word-break: break-all;
+    border-top: 1px solid #000;
+}
+
+tr {
+    height: 60px;
+}
+
+.table-id {
+    width: 200px;
+}
+
+.table-name,
+.table-email {
+    width: 215px;
+}
+
+.table-page {
+    display: flex;
+    justify-content: center;
+}
+
+.table-pagination {
+    margin-top: 20px;
+}

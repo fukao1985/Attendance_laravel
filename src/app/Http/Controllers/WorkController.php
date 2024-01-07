@@ -28,11 +28,26 @@ class WorkController extends Controller
             'work_end' => '',
         ]);
 
-        return back()->withInput($request->all())->with('message', '勤務を開始しました');
+        
 
-        // return back()->withInput($request->'radio')->with('message', '勤務を開始しました');
+        $work_start = 'startWork';
+        session(['startWork' => true]);
 
+        return back()->withInput()->with([
+            'message' => '勤務を開始しました',
+            'status' => 'info'
+        ]);
+        // return back()->withInput($request->all())->with('message', '勤務を開始しました');
     }
+
+    // 0時を跨ぐ際の処理
+    // 23:59:59の時点で勤務中のユーザーを探す
+    //勤務中のユーザーとはDBが下記の状態
+    // work_end === 00:00:00
+    // created_at === updated_at
+    // 勤務中のユーザーがいれば、23:59:59で退勤処理 & 翌日の00:00:00で出勤処理をする
+
+
 
     // 勤務終了の処理
     public function endWork(Request $request, Work $work) {
@@ -58,8 +73,21 @@ class WorkController extends Controller
             'work_end' => $workOutTime->format('H:i:s'),
         ]);
 
-        return back()->withInput($request->all())->with('message', '勤務を終了しました');
-        // return back()->withInput()->with('message', '勤務を終了しました');
+        $work_start = 'startWork';
+        session(['startWork' => false]);
+
+
+        // session(['startWork' => false]);
+        // $workStarted = $request->submit;
+        // session(['flash.success' => false]);
+
+        return back()->withInput()->with(
+            [
+                'message' => '勤務を終了しました',
+                'status' => 'info'
+        ]);
+        // return back()->withInput($request->all())->with('message', '勤務を終了しました');
+        
     }
 
 }

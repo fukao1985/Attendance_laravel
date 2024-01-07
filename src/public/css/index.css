@@ -108,7 +108,8 @@ input[type="radio"] {
     display: none;
 }
 
-input[type="radio"]:disabled+label {
-    pointer-events: none
-}
+/* input[type="submit"]:disabled {
+    pointer-events: none;
+    color: #f2f2f2;
+} */
 
