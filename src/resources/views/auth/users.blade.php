@@ -32,7 +32,7 @@ use Carbon\Carbon;
         <div class="content__form">
             <div class="form-title">
                 <div>
-                <h3 class="form-title-log">ユーザー 一覧ページ</h3>
+                <h3 class="form-title-log">ユーザー 一覧</h3>
                 </div>
             </div>
 

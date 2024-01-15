@@ -1,11 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Work;
 use App\Models\User;
+use App\Models\Rest;
+use App\Http\Controllers\RestController;
 use Carbon\Carbon;
 
 
@@ -13,7 +14,57 @@ class WorkController extends Controller
 {
     // 打刻ページの表示
     public function index() {
-        return view('auth.index');
+        $id = Auth::id();
+        $oldTimeIn = Work::where('user_id', auth()->id())->latest()->first();
+
+        // 今までに勤務した記録がことがあるかどうか
+        if (!$oldTimeIn) {
+            return view('auth.index');
+
+        } elseif ($oldTimeIn) {
+
+            $today = Carbon::today();
+            $oldTimeInDate = $oldTimeIn->date;
+            $work_end = $oldTimeIn->work_end;
+
+            // **休憩判定**
+            $id = Auth::id();
+            $oldRestId = User::find($id)->rests->max('id');
+            $oldRest = Rest::find($oldRestId);
+            $oldRestDate = $oldRest->date;
+            $oldRestInTime = $oldRest->rest_start;
+
+            // **勤務を開始したかどうかの判定**
+            if (($oldTimeInDate == $today) && empty($work_end)) {
+                $startWork = session(['startWork' => true]);
+                session($startWork);
+
+                if (($oldRestDate == $today) && isset($oldRestInTime) && empty($rest_end)) {
+                    $startRest = session(['startRest' => true ]);
+                    session($startRest);
+                    return view('auth.index', compact('startWork', 'startRest'));
+
+                } else {
+                    $startRest = session(['startRest' => false ]);
+                    return view ('auth.index', compact('startWork', 'startRest'));
+                }
+
+                return view('auth.index', compact('startWork', 'startRest'))->with(
+                [
+                    'message' => '勤務を開始しました',
+                    'status' => 'info'
+                ]);
+
+            } else {
+                $startWork = session(['startWork' => false]);
+
+                return view('auth.index', compact('startWork'))->with(
+                [
+                    'message' => '勤務を開始しました',
+                    'status' => 'info'
+                ]);
+            }
+        }
     }
 
     // 勤務開始打刻の処理
@@ -28,137 +79,70 @@ class WorkController extends Controller
             'work_end' => '',
         ]);
 
-        
+        $startWork = session(['startWork' => true]);
+        if ($request->session()->has('startWork')) {
+            $request->session()->put('startWork', 'true');
+        }
 
-        $work_start = 'startWork';
-        session(['startWork' => true]);
-
-        return back()->withInput()->with([
-            'message' => '勤務を開始しました',
-            'status' => 'info'
-        ]);
-        // return back()->withInput($request->all())->with('message', '勤務を開始しました');
+        return view('auth.index', compact('startWork'))->with(
+                [
+                    'message' => '勤務を開始しました',
+                    'status' => 'info'
+                ]);
     }
-
-    // 0時を跨ぐ際の処理
-    // 23:59:59の時点で勤務中のユーザーを探す
-    //勤務中のユーザーとはDBが下記の状態
-    // work_end === 00:00:00
-    // created_at === updated_at
-    // 勤務中のユーザーがいれば、23:59:59で退勤処理 & 翌日の00:00:00で出勤処理をする
-
-
 
     // 勤務終了の処理
     public function endWork(Request $request, Work $work) {
-        // 現在ログインしているユーザーを取得
-        // dd($work);
-
-        // $user = Auth::user();
-        // $id = Auth::id();
+        $id = Auth::id();
         $today = Carbon::today()->format('Y-m-d');
-        
-        // // ログインしているユーザーが本日出勤した記録があるかの確認
-        // ログインユーザーの最新レコードを取得
-        $oldTimeIn = Work::where('user_id', auth()->id())->whereDate('date', $today)->latest()->first();
-        // $oldTimeIn = $work->latest()->first();
-        // 勤務終了を記録する
-        // $id = Auth::id();
+        $yesterday = Carbon::yesterday()->format('Y-m-d');
+        $oldAttendance = Work::where('user_id', auth()->id())->latest()->first();
+
+        // **最終のwork_startが今日なのか昨日なのかを確認
+        $oldAttendanceDate = $oldAttendance->date;
         $workOutTime = Carbon::now();
-        $attendance = new Work;
-        $work_end = $oldTimeIn->update([
-            'user_id' => $oldTimeIn->user_id,
-            'date' => $oldTimeIn->date,
-            'work_start' => $oldTimeIn->work_start,
+        if ($oldAttendanceDate = $today) {
+            $work_end = $oldAttendance->update([
+            'user_id' => $oldAttendance->user_id,
+            'date' => $oldAttendanceDate,
+            'work_start' => $oldAttendance->work_start,
             'work_end' => $workOutTime->format('H:i:s'),
-        ]);
+            ]);
 
-        $work_start = 'startWork';
-        session(['startWork' => false]);
+            session(['startWork' => false]);
+            session()->forget('startWork');
 
-
-        // session(['startWork' => false]);
-        // $workStarted = $request->submit;
-        // session(['flash.success' => false]);
-
-        return back()->withInput()->with(
+            return back()->withInput()->with(
             [
                 'message' => '勤務を終了しました',
                 'status' => 'info'
-        ]);
-        // return back()->withInput($request->all())->with('message', '勤務を終了しました');
-        
+            ]);
+
+        } elseif ($oldAttendanceDate = $yesterday) {
+            $special_work_end_update = $oldAttendance->update([
+            'user_id' => $oldAttendance->user_id,
+            'date' => $oldAttendanceDate,
+            'work_start' => $oldAttendance->work_start,
+            'work_end' => '24:00:00',
+            ]);
+
+            $attendance = new Work;
+
+            $special_work_end_create = Work::create([
+            'user_id' => $id,
+            'date' => $workOutTime->format('Y-m-d'),
+            'work_start' => '00:00:00',
+            'work_end' => $workOutTime->format('H:i:s'),
+            ]);
+
+            session(['startWork' => false]);
+            session()->forget('startWork');
+
+            return back()->withInput()->with(
+            [
+                'message' => '勤務を終了しました',
+                'status' => 'info'
+            ]);
+        }
     }
-
 }
-    //     // ラジオボタンを押した処理を戻った際も表示させたい
-    //     return back()->withInput()->with('message', '勤務を開始しました');
-    // }
-
-    // public function endWork(Request $request) {
-    //     $workOutTime = Carbon::now();
-    //     $attendance = new Work;
-    //     Work::create([
-    //         'work_end' => $workOutTime->format('H:i:s'),
-    //     ]);
-
-    //     return redirect()->with('message', '勤務を終了しました');
-    // }
-
-
-
-
-
-    // // // 勤務を開始していないと勤務終了をクリックできない
-    // // // 0時になった地点で勤務中の場合→勤務終了して、翌日の勤務を開始する
-
-    // // // 勤務開始をクリック
-    // // // その日初めてなら→日付と勤務開始の時間を取得→保存
-    // // public function startWork() {
-    // //     // ユーザー情報を取得する
-    // //     $user = Auth::user();
-    // //     // そのユーザーのその日のWorkテーブルのデータを取得する
-    // //     $today = Carbon::today();
-    // //     $oldTimeIn = Work::whereDate('user_id', $today)->latest()->first();
-
-    // //     if ($oldTimeIn) {
-
-    // //     }
-
-
-    // //     // // 勤務を開始できるのは1日1回のみ
-    // //     // $oldWorkIn = Work::where('user_id', $user->id)->latest()->first();//1番最新の記録を取得する
-
-    // //     // $oldDay = '';
-
-    // //     // if($oldWorkStart) {
-            
-    // //     // }
-
-
-    // //     }
-
-    // //     $now = Carbon::now();
-    // //     $date_format = $date->format('Y-m-d');
-    // //     $time_format = $now->format('H:i:s');
-
-        
-
-        
-
-
-    // //     return back()->with('message', '勤務を開始しました');
-    // // }
-    // // // その日2回目なら→エラーを出す
-    // // // 勤務終了前に次の日になったら自動で次の日付でも出勤にする
-
-
-
-    // // // 勤務終了をクリック
-    // // public function endWork() {
-
-    // //     return back()->with('massage', '勤務を終了しました');
-    // // }
-    // // // その日勤務開始を押したデータがあれば→勤務終了の時間を取得→保存
-    // // // その日勤務開始を押したデータがなければ→エラーを出す
-    // }

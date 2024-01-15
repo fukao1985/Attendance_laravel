@@ -41,49 +41,53 @@
                 <div class="form-box">
                     {{-- 勤務開始 --}}
                     <div class="form-item">
-                        @if ('work.start')
+                        @if (session('startWork'))
                             <form action="{{ route('work.start') }}" method="post">
                             @csrf
-                                <input desabled type="submit" name="submit" class="btn-label" value="勤務開始" style="color:#f2f2f2" />
+                                <button desabled class="btn-label" style="color:#f2f2f2">勤務開始</button>
                             </form>
-                        @elseif ('work.start' && 'work.end')
+                        {{-- @elseif (!$startWork)
                             <form action="{{ route('work.start') }}" method="post">
                             @csrf
-                                <input desabled type="submit" name="submit" class="btn-label" value="勤務開始" style="color:#f2f2f2"/>
-                            </form>
+                                <input desabled type="submit" name="work_start" class="btn-label" value="勤務開始" style="color:#f2f2f2"/>
+                            </form> --}}
                         @else
                             <form action="{{ route('work.start') }}" method="post">
                             @csrf
-                                <input type="submit" name="submit" class="btn-label" value="勤務開始" />
+                                <button class="btn-label">勤務開始</button>
                             </form>
                         @endif
                     </div>
 
                     {{-- 勤務終了 --}}
                     <div class="form-item">
-                        @if ('work.start')
+                        @if (session('startWork'))
                             <form action="{{ route('work.end') }}" method="post">
                             @csrf
-                                <input type="submit" name="submit" class="btn-label" value="勤務終了" />
+                                <button type="submit" class="btn-label">勤務終了</button>
                             </form>
-                        @elseif ('work.start' && 'work.end')
+                        {{-- @elseif ('startWork' && 'work.end')
                             <form action="{{ route('work.end') }}" method="post">
                             @csrf
-                                <input desabled type="submit" name="submit" class="btn-label" value="勤務終了" style="color:#f2f2f2"/>
-                            </form>
+                                <input desabled type="submit" name="work_end" class="btn-label" value="勤務終了" style="color:#f2f2f2"/>
+                            </form> --}}
                         @else
                             <form action="{{ route('work.end') }}" method="post">
                             @csrf
-                                <input desabled type="submit" name="submit" class="btn-label" value="勤務終了" style="color:#f2f2f2"/>
+                                <button desabled class="btn-label" style="color:#f2f2f2">勤務終了</button>
                             </form>
                         @endif
                     </div>
 
                     {{-- 休憩開始 --}}
                     <div class="form-item">
-                        @if ('work.start' && 'rest.start')
-                            <input desabled type="submit" name="submit" class="btn-label" value="休憩開始" style="color:#f2f2f2"/>
-                        @elseif ('work.start')
+                        {{-- 休憩開始ができる --}}
+                        @if (session('startWork') && !session('startRest'))
+                            <form action="{{ route('rest.start') }}" method="post">
+                            @csrf
+                                <button class="btn-label">休憩開始</button>
+                            </form>
+                        {{-- @elseif ('work.start')
                             <form action="{{ route('rest.start') }}" method="post">
                             @csrf
                                 <input type="submit" name="submit" class="btn-label" value="休憩開始"/>
@@ -92,26 +96,26 @@
                             <form action="{{ route('rest.start') }}" method="post">
                             @csrf
                                 <input type="submit" name="submit" class="btn-label" value="休憩開始"/>
-                            </form>
+                            </form> --}}
                         @else
                             <form action="{{ route('rest.start') }}" method="post">
                             @csrf
-                                <input desabled type="submit" name="submit" class="btn-label" value="休憩開始" style="color:#f2f2f2"/>
+                                <button desabled class="btn-label" style="color:#f2f2f2">休憩開始</button>
                             </form>
                         @endif
                     </div>
 
                     {{-- 休憩終了 --}}
                     <div class="form-item">
-                        @if ('work.start' && 'rest.start')
+                        @if (session('startWork') && session('startRest'))
                             <form action="{{ route('rest.end') }}" method="post">
                             @csrf
-                                <input type="submit" name="submit" class="btn-label" value="休憩終了"/>
+                                <button class="btn-label">休憩終了</button>
                             </form>
                         @else
                             <form action="{{ route('rest.end') }}" method="post">
                             @csrf
-                                <input desabled type="submit" name="submit" class="btn-label" value="休憩終了" style="color:#f2f2f2" />
+                                <button desabled class="btn-label" style="color:#f2f2f2">休憩終了</button>
                             </form>
                         @endif
                     </div>

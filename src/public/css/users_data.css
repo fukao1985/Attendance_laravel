@@ -88,6 +88,10 @@ tr {
     width: 200px;
 }
 
+.table-date {
+    width: 250px;
+}
+
 .table-work-start,
 .table-work-end,
 .table-rest,

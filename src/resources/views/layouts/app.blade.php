@@ -20,8 +20,6 @@
     <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/common.css') }}" />
-    
-
     @yield('css')
 </head>
 

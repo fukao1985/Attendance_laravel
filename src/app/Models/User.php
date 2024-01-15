@@ -44,9 +44,19 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    // Workモデルとのリレーション
     public function works() {
         return $this->hasMany('App\Models\Work');
+    }
+
+    public function rests() {
+        return $this->hasManyThrough(
+            Rest::class,
+            Work::class,
+            'user_id',
+            'work_id',
+            'id',
+            'id'
+        );
     }
 
 }

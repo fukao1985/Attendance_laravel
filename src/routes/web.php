@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\AuthenticatedSessionController;
@@ -17,7 +19,6 @@ use App\Http\Controllers\UsersDataController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 
 // 打刻ページの表示
 Route::middleware('auth')->group(function () {
@@ -38,37 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/attendance', [RestController::class, 'dateAttendance'])->name('show.data');
 });
 
-// Route::get('/attendance/date', [RestController::class, 'showDate'])->name('show.date');
-
 // ユーザー一覧表示
 Route::middleware('auth')->group(function () {
     Route::get('/users', [UsersDataController::class, 'usersList'])->name('users.list');
 });
 
 Route::get('/users/data/{id}', [UsersDataController::class, 'usersData'])->name('users.data');
-
-
-
-
-
-
-
-// ユーザー新規登録ページ表示
-// Route::get('/register', [RegisteredUserController::class, 'create']);
-
-// ユーザー新規登録処理
-// Route::post('register', [RegisteredUserController::class, 'store']);
-
-// Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-
-
-
-
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Auth::routes();
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
