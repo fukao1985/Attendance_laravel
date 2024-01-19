@@ -44,4 +44,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/users', [UsersDataController::class, 'usersList'])->name('users.list');
 });
 
-Route::get('/users/data/{id}', [UsersDataController::class, 'usersData'])->name('users.data');
+// ユーザー個別勤怠ページ表示
+Route::middleware('auth')->group(function () {
+    Route::get('/users/data/{id}', [UsersDataController::class, 'usersData'])->name('users.data');
+});
+

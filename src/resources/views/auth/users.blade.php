@@ -28,7 +28,6 @@ use Carbon\Carbon;
 @endsection
 
 @section('content')
-<!-- <div class="main__content"> -->
         <div class="content__form">
             <div class="form-title">
                 <div>
@@ -36,7 +35,7 @@ use Carbon\Carbon;
                 </div>
             </div>
 
-        <!-- データを表示する表(table) -->
+        <!-- データ表示箇所(table) -->
             <div class="form">
                 <div class="form-table">
                     <table>
@@ -67,5 +66,4 @@ use Carbon\Carbon;
                 </div>
             </div>
         </div>
-        <!-- </div> -->
 @endsection

@@ -29,31 +29,31 @@ use Carbon\Carbon;
 @endsection
 
 @section('content')
-<!-- <div class="main__content"> -->
         <div class="content__form">
-        <!-- 日付のところ -->
             <div class="form-title">
-                {{-- <div>
-                    <form action="/attendance" method="get">
+                <h3 class="form-title-log">個別勤怠表</h3>
+            </div>
+            {{-- <div class="form-title">
+                <div>
+                    <form action="{{ route('users.data', ['id' => $id]) }}" method="get">
                     @csrf
                     @if (isset($previous))
                         <button name="date" class="form-button" value="{{ $previous->format('Y-m-d') }}"><</button>
                     @endif
                     </form>
-                </div> --}}
-                {{-- <h3 class="form-title-log">{{ $selectDay->format('Y-m-d') }}</h3> --}}
-                <h3 class="form-title-log">個別勤怠表</h3>
-                {{-- <div>
-                    <form action="/attendance" method="get">
+                </div>
+                <h3 class="form-title-log">{{ $selectDay->format('Y-m-d') }}</h3>
+                <div>
+                    <form action="{{ route('users.data', ['id' => $id]) }}" method="get">
                     @csrf
                     @if (isset($next))
                         <button name="date" class="form-button" valus="{{ $next->format('Y-m-d') }}">></button>
                     @endif
                     </form>
-                </div> --}}
-            </div>
+                </div>
+            </div> --}}
 
-        <!-- データを表示する表(table) -->
+        <!-- データ表示箇所(table) -->
             <div class="form">
                 <div class="form-table">
                     <table>
@@ -65,46 +65,40 @@ use Carbon\Carbon;
                             <th class="table-rest">休憩時間</th>
                             <th class="table-work">勤務時間</th>
                         </tr>
-                        <form action="">
-                            @foreach ($rests as $rest)
-                            <tr class="table-data">
-                                <td class="table-name">{{ $rest->work->user->name??'匿名' }}</td>
-                                <td class="table-date">{{ $rest->work->date }}</td>
-                                <td class="table-work-start">{{ $rest->work->work_start }}</td>
-                                <td class="table-work-end">{{ $rest->work->work_end }}</td>
-                                @php
-                                    $rest_start = strtotime($rest->rest_start);
-                                    $rest_end = strtotime($rest->rest_end);
-                                    $restTimeDiff = $rest_end - $rest_start;
-                                    $restTimeSeconds = floor($restTimeDiff % 60);
-                                    $restTimeMinutes = floor($restTimeDiff / 60);
-                                    $restTimeHours = floor($restTimeMinutes / 60);
-                                    $restTime = $restTimeHours . ":" . $restTimeMinutes . ":" . $restTimeSeconds;
-                                @endphp
-                                <td class="table-rest">{{ $restTime }}</td>
-                                @php
-                                    $work_start = strtotime($rest->work->work_start);
-                                    $work_end = strtotime($rest->work->work_end);
-                                    $workTimeDiff = $work_end - $work_start - $restTimeDiff;
-                                    $workTimeSeconds = floor($workTimeDiff % 60);
-                                    $workTimeMinutes = floor($workTimeDiff / 60);
-                                    $workTimeHours = floor($workTimeMinutes / 60);
-                                    $workTime = $workTimeHours . ":" . $workTimeMinutes . ":" . $workTimeSeconds;
-                                @endphp
-                                <td class="table-work">{{ $workTime }}</td>
-                            </tr>
+                            @foreach ($attendances as $attendance)
+                            <form action="{{ route('users.data', $id) }}" method="get">
+                            @csrf
+                                <tr class="table-data">
+                                    <td class="table-name">{{ $attendance->name }}</td>
+                                    <td class="table-date">{{ $attendance->date }}</td>
+                                    <td class="table-work-start">{{ $attendance->work_start }}</td>
+                                    <td class="table-work-end">{{ $attendance->work_end }}</td>
+                                        @php
+                                            $rest_start = strtotime($attendance->rest_start);
+                                            $rest_end = strtotime($attendance->rest_end);
+                                            $restTimeDiff = $rest_end - $rest_start;
+                                            $formattedRestTime = gmdate('H:i:s', $restTimeDiff);
+                                            $restTime = $formattedRestTime;
+                                        @endphp
+                                        <td class="table-rest">{{ $restTime }}</td>
+                                        @php
+                                            $work_start = strtotime($attendance->work_start);
+                                            $work_end = strtotime($attendance->work_end);
+                                            $workTimeDiff = $work_end - $work_start - $restTimeDiff;
+                                            $formattedWorkTime = gmdate('H:i:s', $workTimeDiff);
+                                            $workTime = $formattedWorkTime;
+                                        @endphp
+                                    <td class="table-work">{{ $workTime }}</td>
+                                </tr>
+                            </form>
                             @endforeach
-                        </form>
                     </table>
                 </div>
                 <div class="table-page">
                     <div class="table-pagination">
-                            {{ $rests->appends(request()->input())->links('pagination::bootstrap-4') }}
+                            {{ $attendances->appends(request()->input())->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
             </div>
-        <!-- ページネーション -->
-                {{-- {{ $works->appends(request()->input())->links('pagination::bootstrap-4') }} --}}
         </div>
-        <!-- </div> -->
 @endsection

@@ -27,7 +27,6 @@
 @endsection
 
 @section('content')
-<!-- <div class="main__content"> -->
         <div class="content__form">
             <div class="form-title">
                 <h3 class="form-title-log">
@@ -44,13 +43,8 @@
                         @if (session('startWork'))
                             <form action="{{ route('work.start') }}" method="post">
                             @csrf
-                                <button desabled class="btn-label" style="color:#f2f2f2">勤務開始</button>
+                                <button class="btn-label" style="color:#f2f2f2">勤務開始</button>
                             </form>
-                        {{-- @elseif (!$startWork)
-                            <form action="{{ route('work.start') }}" method="post">
-                            @csrf
-                                <input desabled type="submit" name="work_start" class="btn-label" value="勤務開始" style="color:#f2f2f2"/>
-                            </form> --}}
                         @else
                             <form action="{{ route('work.start') }}" method="post">
                             @csrf
@@ -66,41 +60,25 @@
                             @csrf
                                 <button type="submit" class="btn-label">勤務終了</button>
                             </form>
-                        {{-- @elseif ('startWork' && 'work.end')
-                            <form action="{{ route('work.end') }}" method="post">
-                            @csrf
-                                <input desabled type="submit" name="work_end" class="btn-label" value="勤務終了" style="color:#f2f2f2"/>
-                            </form> --}}
                         @else
                             <form action="{{ route('work.end') }}" method="post">
                             @csrf
-                                <button desabled class="btn-label" style="color:#f2f2f2">勤務終了</button>
+                                <button class="btn-label" style="color:#f2f2f2">勤務終了</button>
                             </form>
                         @endif
                     </div>
 
                     {{-- 休憩開始 --}}
                     <div class="form-item">
-                        {{-- 休憩開始ができる --}}
                         @if (session('startWork') && !session('startRest'))
                             <form action="{{ route('rest.start') }}" method="post">
                             @csrf
                                 <button class="btn-label">休憩開始</button>
                             </form>
-                        {{-- @elseif ('work.start')
-                            <form action="{{ route('rest.start') }}" method="post">
-                            @csrf
-                                <input type="submit" name="submit" class="btn-label" value="休憩開始"/>
-                            </form>
-                        @elseif ('work.start' && 'rest.end')
-                            <form action="{{ route('rest.start') }}" method="post">
-                            @csrf
-                                <input type="submit" name="submit" class="btn-label" value="休憩開始"/>
-                            </form> --}}
                         @else
                             <form action="{{ route('rest.start') }}" method="post">
                             @csrf
-                                <button desabled class="btn-label" style="color:#f2f2f2">休憩開始</button>
+                                <button class="btn-label" style="color:#f2f2f2">休憩開始</button>
                             </form>
                         @endif
                     </div>
@@ -115,12 +93,11 @@
                         @else
                             <form action="{{ route('rest.end') }}" method="post">
                             @csrf
-                                <button desabled class="btn-label" style="color:#f2f2f2">休憩終了</button>
+                                <button class="btn-label" style="color:#f2f2f2">休憩終了</button>
                             </form>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
-        <!-- </div> -->
 @endsection

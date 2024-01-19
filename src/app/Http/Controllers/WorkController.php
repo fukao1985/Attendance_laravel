@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Work;
 use App\Models\User;
 use App\Models\Rest;
@@ -17,7 +18,6 @@ class WorkController extends Controller
         $id = Auth::id();
         $oldTimeIn = Work::where('user_id', auth()->id())->latest()->first();
 
-        // 今までに勤務した記録がことがあるかどうか
         if (!$oldTimeIn) {
             return view('auth.index');
 
@@ -38,31 +38,41 @@ class WorkController extends Controller
             if (($oldTimeInDate == $today) && empty($work_end)) {
                 $startWork = session(['startWork' => true]);
                 session($startWork);
+                // session(['startWork' => true]);
+                // $startWork = session('startWork');
 
                 if (($oldRestDate == $today) && isset($oldRestInTime) && empty($rest_end)) {
                     $startRest = session(['startRest' => true ]);
                     session($startRest);
                     return view('auth.index', compact('startWork', 'startRest'));
+                    // session(['startRest' => true]);
+                    // $startRest = session('startRest');
+
+                    return view('auth.index', compact('startWork', 'startRest'));
 
                 } else {
                     $startRest = session(['startRest' => false ]);
                     return view ('auth.index', compact('startWork', 'startRest'));
+                    // $startRest = session('startRest');
+                    // session(['startRest' => false]);
+
+                    return view('auth.index', compact('startWork', 'startRest'));
                 }
 
-                return view('auth.index', compact('startWork', 'startRest'))->with(
-                [
-                    'message' => '勤務を開始しました',
-                    'status' => 'info'
-                ]);
+                return view('auth.index', compact('startWork', 'startRest'));
 
             } else {
                 $startWork = session(['startWork' => false]);
 
-                return view('auth.index', compact('startWork'))->with(
-                [
-                    'message' => '勤務を開始しました',
-                    'status' => 'info'
-                ]);
+                // return view('auth.index', compact('startWork'))->with(
+                // [
+                //     'message' => '勤務を開始しました',
+                //     'status' => 'info'
+                // ]);
+                // $startWork = session('startWork');
+                // session(['startWork' => false]);
+
+                return view('auth.index', compact('startWork'));
             }
         }
     }
@@ -83,12 +93,9 @@ class WorkController extends Controller
         if ($request->session()->has('startWork')) {
             $request->session()->put('startWork', 'true');
         }
+        // $startWork = session('startWork');
 
-        return view('auth.index', compact('startWork'))->with(
-                [
-                    'message' => '勤務を開始しました',
-                    'status' => 'info'
-                ]);
+        return view('auth.index', compact('startWork'))->with('message', '勤務を開始しました');
     }
 
     // 勤務終了の処理
@@ -97,11 +104,10 @@ class WorkController extends Controller
         $today = Carbon::today()->format('Y-m-d');
         $yesterday = Carbon::yesterday()->format('Y-m-d');
         $oldAttendance = Work::where('user_id', auth()->id())->latest()->first();
-
-        // **最終のwork_startが今日なのか昨日なのかを確認
         $oldAttendanceDate = $oldAttendance->date;
         $workOutTime = Carbon::now();
-        if ($oldAttendanceDate = $today) {
+
+        if ($oldAttendanceDate == $today) {
             $work_end = $oldAttendance->update([
             'user_id' => $oldAttendance->user_id,
             'date' => $oldAttendanceDate,
@@ -111,14 +117,15 @@ class WorkController extends Controller
 
             session(['startWork' => false]);
             session()->forget('startWork');
+            // session()->forget('startWork');
 
-            return back()->withInput()->with(
+            return view('auth.index')->with(
             [
                 'message' => '勤務を終了しました',
                 'status' => 'info'
             ]);
 
-        } elseif ($oldAttendanceDate = $yesterday) {
+        } elseif ($oldAttendanceDate == $yesterday) {
             $special_work_end_update = $oldAttendance->update([
             'user_id' => $oldAttendance->user_id,
             'date' => $oldAttendanceDate,
@@ -126,7 +133,7 @@ class WorkController extends Controller
             'work_end' => '24:00:00',
             ]);
 
-            $attendance = new Work;
+            // $special_work_end_create = new Work;
 
             $special_work_end_create = Work::create([
             'user_id' => $id,
@@ -137,8 +144,9 @@ class WorkController extends Controller
 
             session(['startWork' => false]);
             session()->forget('startWork');
+            // session()->forget('startWork');
 
-            return back()->withInput()->with(
+            return view('auth.index')->with(
             [
                 'message' => '勤務を終了しました',
                 'status' => 'info'

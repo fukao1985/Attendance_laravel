@@ -13,7 +13,6 @@
 @endsection
 
 @section('content')
-<!-- <div class="main__content"> -->
     <div class="content__form">
         <div class="form-title">
             <h3 class="form-title-log">ログイン</h3>
@@ -47,5 +46,4 @@
             </form>
         </div>
     </div>
-<!-- </div> -->
 @endsection
