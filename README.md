@@ -50,6 +50,7 @@
 
 ***
 
+## テーブル設計
 ### usersテーブル
 |Column|Type|Options| 
 |:---:|:---:|:---:| 
@@ -58,36 +59,6 @@
 |password|varchar(191)|null: false|
 |created_at|timestamp|———|
 |updated_at|timestamp|———|
-
-## テーブル設計
-### usersテーブル
-|Column|Type|Options|
-|:——-—:|:——:|:———-:|
-|name|varChar(191)|null: false|
-|email|varchar(191)|null: false|
-|password|varchar(191)|null: false|
-|created_at|timestamp|———|
-|update_at|timestamp|———|
-
-### worksテーブル
-|Column|Type|Options|
-|:——-—:|:——:|:———-:|
-|user_id|bigint|null: false|
-|date|date|null: false|
-|work_start|time|———|
-|work_end|time|———|
-|created_at|timestamp|———|
-|update_at|timestamp|———|
-
-### restsテーブル
-|Column|Type|Options|
-|:——-—:|:——:|:———-:|
-|work_id|bigint|null: false|
-|date|date|null: false|
-|rest_start|time|———|
-|rest_end|time|———|
-|created_at|timestamp|———|
-|update_at|timestamp|———|
 
 ***
 
