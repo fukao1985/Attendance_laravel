@@ -60,6 +60,26 @@
 |created_at|timestamp|———|
 |updated_at|timestamp|———|
 
+### worksテーブル
+|Column|Type|Options| 
+|:---:|:---:|:---:| 
+|user_id|bigint|null: false|
+|date|date|null: false|
+|work_start|time|———|
+|work_end|time|———|
+|created_at|timestamp|———|
+|updated_at|timestamp|———|
+
+### restsテーブル
+|Column|Type|Options| 
+|:---:|:---:|:---:| 
+|work_id|bigint|null: false|
+|date|date|null: false|
+|rest_start|time|———|
+|rest_end|time|———|
+|created_at|timestamp|———|
+|updated_at|timestamp|———|
+
 ***
 
 ## ER図
