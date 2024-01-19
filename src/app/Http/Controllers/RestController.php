@@ -31,7 +31,6 @@ class RestController extends Controller
         if ($request->session()->has('startRest')) {
             $request->session()->put('startRest', 'true');
         }
-        // $startRest = session('startRest');
 
         return view('auth.index')->with('message', '休憩を開始しました');
 
@@ -60,7 +59,6 @@ class RestController extends Controller
 
             session(['startRest' => false]);
             session()->forget('startRest');
-            // session()->forget('startRest');
 
             return view('auth.index')->with('message', '休憩を終了しました');
 
@@ -78,8 +76,6 @@ class RestController extends Controller
             'work_start' => $oldAttendance->work_start,
             'work_end' => '24:00:00',
             ]);
-
-            // $special_work_end_create = new Work;
 
             $special_work_start_create = Work::create([
             'user_id' => $id,
@@ -99,7 +95,6 @@ class RestController extends Controller
 
             session(['startRest' => false]);
             session()->forget('startRest');
-            // session()->forget('startRest');
 
             return view('auth.index')->withInput($request->all())->with('message', '休憩を終了しました');
         }
@@ -118,33 +113,11 @@ class RestController extends Controller
             $next = (new Carbon($request->date))->addDay();
         }
 
-        // $restsExist = Rest::whereDate('date', $selectDay)->get();
-
-        // if ($restsExist) {
-        //     $attendances = Work::join('users', 'works.user_id', '=', 'users.id')->join('rests', 'rests.work_id', '=', 'works.id')
-        //     ->whereDate('works.date', $selectDay)
-        //     ->paginate(5);
-
-        // } else {
-        //     $attendances = Work::with('user')
-        //     ->whereDate('date', $selectDay)
-        //     ->where('user_id', $id)
-        //     ->paginate(5);
-
-        // }
-
         $attendances = DB::table('rests')
         ->rightJoin('works', 'rests.work_id', '=', 'works.id')
         ->join('users', 'works.user_id', '=', 'users.id')
         ->whereDate('works.date', $selectDay)
         ->paginate(5);
-
-
-        // $attendances = Work::with(['user', 'rests'])
-            // ->whereDate('date', $selectDay)
-            // ->where('user_id', $id)
-            // ->paginate(5);
-        // $attendances = Work::join('users', 'works.user_id', '=', 'users.id')->join('rests', 'rests.work_id', '=', 'works.id')->whereDate('works.date', $selectDay)->paginate(5);
 
     return view('/auth.attendance', compact('attendances', 'selectDay', 'previous', 'next'));
     }

@@ -38,23 +38,17 @@ class WorkController extends Controller
             if (($oldTimeInDate == $today) && empty($work_end)) {
                 $startWork = session(['startWork' => true]);
                 session($startWork);
-                // session(['startWork' => true]);
-                // $startWork = session('startWork');
 
                 if (($oldRestDate == $today) && isset($oldRestInTime) && empty($rest_end)) {
                     $startRest = session(['startRest' => true ]);
                     session($startRest);
                     return view('auth.index', compact('startWork', 'startRest'));
-                    // session(['startRest' => true]);
-                    // $startRest = session('startRest');
 
                     return view('auth.index', compact('startWork', 'startRest'));
 
                 } else {
                     $startRest = session(['startRest' => false ]);
                     return view ('auth.index', compact('startWork', 'startRest'));
-                    // $startRest = session('startRest');
-                    // session(['startRest' => false]);
 
                     return view('auth.index', compact('startWork', 'startRest'));
                 }
@@ -63,14 +57,6 @@ class WorkController extends Controller
 
             } else {
                 $startWork = session(['startWork' => false]);
-
-                // return view('auth.index', compact('startWork'))->with(
-                // [
-                //     'message' => '勤務を開始しました',
-                //     'status' => 'info'
-                // ]);
-                // $startWork = session('startWork');
-                // session(['startWork' => false]);
 
                 return view('auth.index', compact('startWork'));
             }
@@ -93,7 +79,6 @@ class WorkController extends Controller
         if ($request->session()->has('startWork')) {
             $request->session()->put('startWork', 'true');
         }
-        // $startWork = session('startWork');
 
         return view('auth.index', compact('startWork'))->with('message', '勤務を開始しました');
     }
@@ -117,7 +102,6 @@ class WorkController extends Controller
 
             session(['startWork' => false]);
             session()->forget('startWork');
-            // session()->forget('startWork');
 
             return view('auth.index')->with(
             [
@@ -133,8 +117,6 @@ class WorkController extends Controller
             'work_end' => '24:00:00',
             ]);
 
-            // $special_work_end_create = new Work;
-
             $special_work_end_create = Work::create([
             'user_id' => $id,
             'date' => $workOutTime->format('Y-m-d'),
@@ -144,7 +126,6 @@ class WorkController extends Controller
 
             session(['startWork' => false]);
             session()->forget('startWork');
-            // session()->forget('startWork');
 
             return view('auth.index')->with(
             [

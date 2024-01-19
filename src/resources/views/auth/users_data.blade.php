@@ -33,25 +33,6 @@ use Carbon\Carbon;
             <div class="form-title">
                 <h3 class="form-title-log">個別勤怠表</h3>
             </div>
-            {{-- <div class="form-title">
-                <div>
-                    <form action="{{ route('users.data', ['id' => $id]) }}" method="get">
-                    @csrf
-                    @if (isset($previous))
-                        <button name="date" class="form-button" value="{{ $previous->format('Y-m-d') }}"><</button>
-                    @endif
-                    </form>
-                </div>
-                <h3 class="form-title-log">{{ $selectDay->format('Y-m-d') }}</h3>
-                <div>
-                    <form action="{{ route('users.data', ['id' => $id]) }}" method="get">
-                    @csrf
-                    @if (isset($next))
-                        <button name="date" class="form-button" valus="{{ $next->format('Y-m-d') }}">></button>
-                    @endif
-                    </form>
-                </div>
-            </div> --}}
 
         <!-- データ表示箇所(table) -->
             <div class="form">

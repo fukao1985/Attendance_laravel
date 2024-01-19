@@ -17,15 +17,6 @@
             <div class="form-title">
                 <h3 class="form-title-log">会員登録</h3>
             </div>
-            {{-- @if ($errors->any())
-            <div class="alert alert-danger mt-3">
-                <ul>
-            @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-            @endforeach
-            </ul>
-            </div>
-            @endif --}}
             <div class="form">
                 <form class="form-box" action="/register" method="post">
                 @csrf
