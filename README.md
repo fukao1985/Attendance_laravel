@@ -1,6 +1,6 @@
 # Atte
 “Atte（アット）”は勤怠管理システムです。  
-![Attendanceトップ画像.png]()
+![img/Attendanceトップ画像.png]()
 
 ***
 
