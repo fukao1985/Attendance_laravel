@@ -50,6 +50,15 @@
 
 ***
 
+### usersテーブル
+|Column|Type|Options| 
+|:---:|:---:|:---:| 
+|name|varchar(191)|null: false|
+|email|varchar(191)|null: false|
+|password|varchar(191)|null: false|
+|created_at|timestamp|———|
+|updated_at|timestamp|———|
+
 ## テーブル設計
 ### usersテーブル
 |Column|Type|Options|
