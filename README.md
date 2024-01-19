@@ -14,7 +14,7 @@
 ***
 
 ## 機能一覧
-* 会員登録機能
+* 会員登録機能(メール認証未完成)
 * ログイン機能
 * ログアウト機能
 * 勤怠開始機能
@@ -83,7 +83,9 @@
 ***
 
 ## ER図
-![attendance.ER図.png]()
+<img width="999" alt="Attendance ER図" src="https://github.com/fukao1985/Attendance_laravel/assets/141505803/56448644-3bd3-4f7e-805e-640411975026">
+
+
 
 
 
