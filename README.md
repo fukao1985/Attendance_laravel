@@ -1,6 +1,6 @@
 # Atte
 “Atte（アット）”は勤怠管理システムです。<br>
-会員登録をしたうえで利用可能となります。
+利用するには会員登録が必要となります。
 <img width="1093" alt="勤怠画面" src="https://github.com/fukao1985/Attendance_laravel/assets/141505803/d74e15d0-acae-4c41-b671-1457f658329e">
 
 ***
