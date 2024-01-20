@@ -91,7 +91,7 @@
                                 <button class="btn-label">休憩終了</button>
                             </form>
                         @else
-                            <form action="{{ route('rest.end') }}" method="post">
+                            <form action="{{ route('rest.end')}}" method="post">
                             @csrf
                                 <button class="btn-label" style="color:#f2f2f2">休憩終了</button>
                             </form>

@@ -32,7 +32,7 @@ class RestController extends Controller
             $request->session()->put('startRest', 'true');
         }
 
-        return view('auth.index')->with('message', '休憩を開始しました');
+        return view('auth.index');
 
     }
 
@@ -60,7 +60,7 @@ class RestController extends Controller
             session(['startRest' => false]);
             session()->forget('startRest');
 
-            return view('auth.index')->with('message', '休憩を終了しました');
+            return view('auth.index');
 
         } elseif ($oldRestDate == $yesterday) {
             $special_rest_end_update = $oldRest->update([
@@ -96,7 +96,7 @@ class RestController extends Controller
             session(['startRest' => false]);
             session()->forget('startRest');
 
-            return view('auth.index')->withInput($request->all())->with('message', '休憩を終了しました');
+            return view('auth.index');
         }
     }
 

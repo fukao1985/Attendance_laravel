@@ -1,12 +1,15 @@
 # Atte
 ### “Atte（アット）”は勤怠管理システムです。<br>
 利用するには会員登録が必要となります。
-<img width="1093" alt="勤怠画面" src="https://github.com/fukao1985/Attendance_laravel/assets/141505803/d74e15d0-acae-4c41-b671-1457f658329e">
+![alt](img/Attendanceトップ画像.png)<br>【勤務開始前の状態】<br>
+![alt](img/Atte画面2.png)<br>【勤務開始後の状態/休憩終了後の状態】<br>
+![alt](img/Atte画面3.png)<br>【休憩開始後の状態】<br>
+ ※ セッション保持が未完成のため、一旦ページを離れると勤務開始前の画面状態に戻ってしまいます。そのため、ボタンは非活性にせずグレー文字の場合でもデータを保存できる状態にしています。<br>(ページを離れずに打刻していく場合は上記デザイン通りの仕様です)<br>
 
 ***
 
 ## 作成した目的
-従業員の勤務状態を管理するため。
+模擬案件(初級)として作成しました。
 
 ***
 
@@ -37,12 +40,18 @@
     - 新しいworkレコードをwork_startを00:00:00、work_endをnullで作成
     - 新しいrestレコードをrest_startを00:00:00、rest_endを現在時刻で作成
 
+**ユーザー別勤怠情報取得(個別勤怠表ページの表示)方法について**
+
+1. 打刻ページ右上【日付一覧】をクリック
+1. 日付一覧ページ右上【ユーザー一覧】をクリック
+1. ユーザー一覧ページのユーザー名をクリック
+
 ***
 
 ## 使用技術
 * Laravel 8.x
 * Laravel Fortify
-* PHP
+* PHP 7.4.9
 * MySQL 8.0.26
 * Niginx
 * Docker/Docker-compose
@@ -85,11 +94,3 @@
 
 ## ER図
 <img width="999" alt="Attendance ER図" src="https://github.com/fukao1985/Attendance_laravel/assets/141505803/56448644-3bd3-4f7e-805e-640411975026">
-
-
-
-
-
-
- 
-
