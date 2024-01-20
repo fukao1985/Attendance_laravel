@@ -14,6 +14,8 @@
 ***
 
 ## アプリケーションURL
+http://54.168.148.66/login<br>
+※ エラー対応が出来ておらずlogin画面・会員登録画面の表示のみ
 
 ***
 
@@ -57,6 +59,7 @@
 * Docker/Docker-compose
 * Node.js
 * bootstrap
+* AWS(EC2, RDS)
 
 ***
 
