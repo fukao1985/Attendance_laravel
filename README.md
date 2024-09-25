@@ -55,7 +55,6 @@
 * Docker/Docker-compose
 * Node.js
 * bootstrap
-* AWS(EC2, RDS)
 
 ***
 
